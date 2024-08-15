@@ -504,8 +504,8 @@ class IndividualOptionsForm(NetBoxModelForm):
             (
                 'user_id',
                 'ignore_cable_type',
-                'preselected_device_roles',
-                'preselected_tags',
+                'prd',
+                'prt',
                 'save_coords',
                 'show_unconnected',
                 'show_cables',
@@ -534,14 +534,14 @@ class IndividualOptionsForm(NetBoxModelForm):
             'If any ignored Termination Type is part of a connection, the '
             'cable is not displayed.')
     )
-    preselected_device_roles = DynamicModelMultipleChoiceField(
+    prd = DynamicModelMultipleChoiceField(
         label=_('Preselected Device Role'),
         queryset=DeviceRole.objects.all(),
         required=False,
         help_text=_('Select Device Roles that you want to have '
             'preselected in the filter tab.')
     )
-    preselected_tags = forms.ModelMultipleChoiceField(
+    prt = forms.ModelMultipleChoiceField(
         label=_('Preselected Tags'),
         queryset=Device.tags.all(),
         required=False,
@@ -666,7 +666,7 @@ class IndividualOptionsForm(NetBoxModelForm):
     class Meta:
         model = IndividualOptions
         fields = [
-            'user_id', 'ignore_cable_type', 'preselected_device_roles', 'preselected_tags',
+            'user_id', 'ignore_cable_type', 'prd', 'prt',
             'save_coords', 'show_unconnected', 'show_cables', 'show_logical_connections',
             'show_single_cable_logical_conns', 'show_neighbors', 'show_circuit', 'show_power',
             'show_wireless', 'group_sites', 'group_locations', 'group_racks', 'group_virtualchassis', 'draw_default_layout',

@@ -783,14 +783,14 @@ class TopologyHomeView(PermissionRequiredMixin, View):
             
         else:
             # No GET-Request in URL. We most likely came here from the navigation menu.
-            preselected_device_roles = IndividualOptions.objects.get(id=individualOptions.id).preselected_device_roles.all().values_list('id', flat=True)
-            preselected_tags = IndividualOptions.objects.get(id=individualOptions.id).preselected_tags.all().values_list(Lower('name'), flat=True)
+            prd = IndividualOptions.objects.get(id=individualOptions.id).prd.all().values_list('id', flat=True)
+            prt = IndividualOptions.objects.get(id=individualOptions.id).prt.all().values_list(Lower('name'), flat=True)
             ignore_cable_type = IndividualOptions.objects.get(id=individualOptions.id).ignore_cable_type.translate({ord(i): None for i in '[]\''}).split(', ')
             if ignore_cable_type == ['']: ignore_cable_type = []
 
             q = QueryDict(mutable=True)
-            q.setlist("role_id", list(preselected_device_roles))
-            q.setlist("tag", list(preselected_tags))
+            q.setlist("role_id", list(prd))
+            q.setlist("tag", list(prt))
             q.setlist("ignore_cable_type", ignore_cable_type)
 
             if individualOptions.save_coords: q['save_coords'] = "True"
@@ -1150,8 +1150,8 @@ class TopologyIndividualOptionsView(PermissionRequiredMixin, View):
             initial={
                 'user_id': request.user.id,
                 'ignore_cable_type': tuple(queryset.ignore_cable_type.translate({ord(i): None for i in '[]\''}).split(', ')),
-                'preselected_device_roles': IndividualOptions.objects.get(id=queryset.id).preselected_device_roles.all(),
-                'preselected_tags': IndividualOptions.objects.get(id=queryset.id).preselected_tags.all(),
+                'prd': IndividualOptions.objects.get(id=queryset.id).prd.all(),
+                'prt': IndividualOptions.objects.get(id=queryset.id).prt.all(),
                 'save_coords': queryset.save_coords,
                 'show_unconnected': queryset.show_unconnected,
                 'show_cables': queryset.show_cables, 

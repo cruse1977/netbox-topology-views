@@ -347,17 +347,17 @@ class IndividualOptions(NetBoxModel):
         max_length = 255,
         blank = True,
     )
-    preselected_device_roles = models.ManyToManyField(
+    prd = models.ManyToManyField(
         to='dcim.DeviceRole',
         related_name='+',
         blank=True,
-        db_table='netbox_topology_views_individualoptions_preselected_device',
+        db_table='netbox_topology_views_individualoptions_prd',
     )
-    preselected_tags = models.ManyToManyField(
+    prt = models.ManyToManyField(
         to='extras.Tag',
         related_name='+',
         blank=True,
-        db_table='netbox_topology_views_individualoptions_preselected_tag',
+        db_table='netbox_topology_views_individualoptions_prt',
     )
     save_coords = models.BooleanField(
         default=False
